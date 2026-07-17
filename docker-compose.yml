@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:17
+    container_name: magnolia_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: tienda
+      POSTGRES_USER: magnolia
+      POSTGRES_PASSWORD: magnolia123
+    ports:
+      - "5432:5432"
+    volumes:
+      - magnolia_data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+      # Los scripts .sql dentro de la carpeta ./sql se ejecutan
+      # automáticamente EN ORDEN ALFABÉTICO la primera vez que se
+      # crea el contenedor (por eso los archivos se numeraron
+      # 01, 02, 03... 07).
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: magnolia_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
+volumes:
+  magnolia_data:
