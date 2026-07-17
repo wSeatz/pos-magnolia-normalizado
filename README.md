@@ -52,6 +52,16 @@ mv *.sql sql/
 docker compose up -d
 ```
 
+> **Nota:** los archivos `.sql` de este repositorio están en la raíz.
+> Antes de ejecutar `docker compose up -d`, muévelos a una carpeta
+> llamada `sql/` (así lo espera `docker-compose.yml`):
+>
+> ```bash
+> mkdir sql
+> mv *.sql sql/
+> docker compose up -d
+> ```
+
 Esto levanta:
 - **PostgreSQL** en `localhost:5432` (usuario `magnolia`,
   contraseña `magnolia123`, base de datos `tienda`)
